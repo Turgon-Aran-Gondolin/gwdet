@@ -3,12 +3,13 @@ gwdet: detectability of gravitational-wave signals from compact binary coalescen
 https://github.com/dgerosa/gwdet
 '''
 
-from __future__ import print_function,division
+
+
 import sys
 import os
 import contextlib
 import io
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import time
 import warnings
 import six
@@ -415,7 +416,7 @@ class detectability(object):
                 #pool.join()
 
             else:
-                meshvalues = map(self._snr, meshgrid)
+                meshvalues = list(map(self._snr, meshgrid))
 
             #print meshvalues
 
@@ -507,7 +508,7 @@ class detectability(object):
                     #pool.close()
 
                 else:
-                    meshvalues = map(self._compute, meshgrid)
+                    meshvalues = list(map(self._compute, meshgrid))
 
 
                 valuesforinterpolator = np.zeros([len(x) for x in grids])
@@ -520,7 +521,6 @@ class detectability(object):
                 with open(self.binfile, 'wb') as f: pickle.dump(interpolant, f)
 
             with open(self.binfile, 'rb') as f: interpolant = pickle.load(f)
-
             self._interpolate = interpolant
 
         return self._interpolate
@@ -552,7 +552,7 @@ def compare_Pw():
 
     # Download file from Emanuele Berti's website if it does not exist
     if not os.path.isfile("Pw_single.dat"):
-        urllib.urlretrieve('http://www.phy.olemiss.edu/~berti/research/Pw_single.dat', "Pw_single.dat")
+        urllib.request.urlretrieve('http://www.phy.olemiss.edu/~berti/research/Pw_single.dat', "Pw_single.dat")
 
     wEm,PwEm=np.loadtxt("Pw_single.dat",unpack=True)
     wmy = np.linspace(-0.1,1.1,1000)
