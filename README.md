@@ -1,4 +1,8 @@
-# gwdet
+# gwdet 
+
+**Patched for python3 compatibility.**
+
+Note that to generate the checkpoint files by yourself, you need `lalsuite` and `pycbc`. The program is memory-lusting, so use with caution. 
 
 #### Detectability of gravitational-wave signals from compact binary coalescences
 
